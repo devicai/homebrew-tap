@@ -6,21 +6,33 @@ Homebrew formulae for [Devic](https://www.devic.ai) open-source tooling.
 
 ```sh
 brew tap devicai/tap
-brew install devic-cli-wrapper
+brew install shellpilot
 ```
 
 Then run:
 
 ```sh
-devic-cli-wrapper version
-devic-cli-wrapper install        # install + shim the CLIs declared in policy
+shellpilot version
+shellpilot install        # install + shim the CLIs declared in policy
 ```
 
 ## Formulae
 
 | Formula | Description |
 |---|---|
-| `devic-cli-wrapper` | ShellPilot wrapper — governance, JIT credentials and audit trail for AI-agent CLIs. |
+| `shellpilot` | ShellPilot wrapper — governance, JIT credentials and audit trail for AI-agent CLIs. |
+
+## Migrating from `devic-cli-wrapper`
+
+The formula was renamed in v0.6.0. On-disk paths moved from `~/.devic/` to
+`~/.shellpilot/` and env vars from `DEVIC_*` to `SHELLPILOT_*`, so remove the old
+binary and its shims before installing:
+
+```sh
+brew uninstall devic-cli-wrapper && rm -rf ~/.devic
+brew install shellpilot
+shellpilot login --base-url <host>   # re-authenticate
+```
 
 ## Notes
 
