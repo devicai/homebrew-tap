@@ -25,21 +25,31 @@ shellpilot install        # install + shim the CLIs declared in policy
 ## Windows
 
 There is no Homebrew on Windows, so the binary is downloaded straight from a
-release. Replace `<ver>` with the latest tag (see
-[Releases](https://github.com/devicai/homebrew-tap/releases)):
+release. Assets are versioned — bump `0.12.0` to the current tag when a newer
+one exists (see [Releases](https://github.com/devicai/homebrew-tap/releases)):
 
 ```powershell
 $dir = "$env:LOCALAPPDATA\ShellPilot"
-Invoke-WebRequest https://github.com/devicai/homebrew-tap/releases/download/v<ver>/shellpilot_<ver>_windows_amd64.zip -OutFile "$env:TEMP\shellpilot.zip"
+Invoke-WebRequest https://github.com/devicai/homebrew-tap/releases/download/v0.12.0/shellpilot_0.12.0_windows_amd64.zip -OutFile "$env:TEMP\shellpilot.zip"
 Expand-Archive -Force "$env:TEMP\shellpilot.zip" $dir
-[Environment]::SetEnvironmentVariable('Path', "$dir;" + [Environment]::GetEnvironmentVariable('Path','User'), 'User')
+
+# shims first, so the wrapper wins name resolution over the real CLI
+$k = 'HKCU:\Environment'
+$cur = (Get-Item $k).GetValue('Path','',[Microsoft.Win32.RegistryValueOptions]::DoNotExpandEnvironmentNames)
+Set-ItemProperty $k -Name Path -Value ("$env:USERPROFILE\.shellpilot\shims;$dir;" + $cur) -Type ExpandString
 ```
 
 Open a new terminal, then `shellpilot login --base-url <host>` and
 `shellpilot install`. Upgrading means re-running the snippet with the new tag.
 
-> Windows support landed in 0.10.0 and has **not been tested on real hardware**
-> yet. `arm64` zips are published alongside `amd64`.
+Do not set PATH with `setx` (it copies the machine PATH into your user variable
+and truncates at 1024 characters) or with
+`[Environment]::SetEnvironmentVariable` (it writes `REG_SZ`, freezing any
+`%VAR%` in your PATH into a literal — this broke nvm4w on a test machine). The
+registry form above preserves both scope and type.
+
+> Windows was verified end to end on real hardware as of 0.11.0. `arm64` zips
+> are published alongside `amd64`.
 
 ## Migrating from `devic-cli-wrapper`
 
