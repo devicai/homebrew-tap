@@ -1,28 +1,28 @@
 class Shellpilot < Formula
   desc "ShellPilot — governance, JIT credentials and audit trail for AI-agent CLIs"
   homepage "https://github.com/devicai/shellpilot"
-  version "0.8.0"
+  version "0.9.0"
   license "Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/devicai/homebrew-tap/releases/download/v0.8.0/shellpilot_0.8.0_darwin_arm64.tar.gz"
-      sha256 "f4aecc8c38ecdbc866c8d5d6bcb64dc9c2acf7e308bb90a385d9ef16040b290f"
+      url "https://github.com/devicai/homebrew-tap/releases/download/v0.9.0/shellpilot_0.9.0_darwin_arm64.tar.gz"
+      sha256 "2a2bfe2bb0fd7ba1988346f87225991ffc2180f0b486941e03e7fbf99bdd2fa8"
     end
     on_intel do
-      url "https://github.com/devicai/homebrew-tap/releases/download/v0.8.0/shellpilot_0.8.0_darwin_amd64.tar.gz"
-      sha256 "f3fe8a754126a8a20be49a10cba30d6a72156bf58190f3c2dce52fb8d3a9e587"
+      url "https://github.com/devicai/homebrew-tap/releases/download/v0.9.0/shellpilot_0.9.0_darwin_amd64.tar.gz"
+      sha256 "c3bc29645ae45f9e674e4a32d5c2833dc294b1b12561540c8f6a34378c6fd0ba"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/devicai/homebrew-tap/releases/download/v0.8.0/shellpilot_0.8.0_linux_arm64.tar.gz"
-      sha256 "39473f890dcee68a82f002d175c14da85037a6e61bcf69cc3037863c57549f35"
+      url "https://github.com/devicai/homebrew-tap/releases/download/v0.9.0/shellpilot_0.9.0_linux_arm64.tar.gz"
+      sha256 "afe369b0a07a2b4c34ed1329e2b3dfeaad221397ebde2e7bdb1a46251f19b118"
     end
     on_intel do
-      url "https://github.com/devicai/homebrew-tap/releases/download/v0.8.0/shellpilot_0.8.0_linux_amd64.tar.gz"
-      sha256 "42ac213aa96ec9d3780faceef30b52fca58c90062f2f24f6302960c31e183a9e"
+      url "https://github.com/devicai/homebrew-tap/releases/download/v0.9.0/shellpilot_0.9.0_linux_amd64.tar.gz"
+      sha256 "a833c77d388a66b08ed2ad12c88e4bb5da15b6873e3a1f877df258ce350a520b"
     end
   end
 
@@ -31,6 +31,6 @@ class Shellpilot < Formula
   end
 
   test do
-    assert_match "0.8.0", shell_output("#{bin}/shellpilot version")
+    assert_match "0.9.0", shell_output("#{bin}/shellpilot version")
   end
 end
